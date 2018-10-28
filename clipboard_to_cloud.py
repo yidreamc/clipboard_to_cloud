@@ -3,6 +3,7 @@ import pyHook
 import requests
 import json
 import pyperclip
+from notice import show_toast
 from PIL import Image
 from PIL import ImageGrab
 
@@ -24,12 +25,14 @@ class KeyboardMgr:
                 tmp_file = 'tmp.png'
                 im.save(tmp_file)
                 files = {'smfile': open(tmp_file, 'rb')}
+                print("upload")
                 response = requests.post('https://sm.ms/api/upload',files=files)
+                print("upload succes")
                 response_json = to_json(response.text)['data']
-                print(response_json)
                 url = response_json['url']
                 storename = response_json['storename']
                 pyperclip.copy('![' + storename + ']('+ url +')')
+                show_toast("Copy Success")
         return True
     def on_key_up(self, event):
         if str(event.Key) == 'Lcontrol':
