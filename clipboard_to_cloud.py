@@ -18,6 +18,7 @@ class KeyboardMgr:
         if str(event.Key) == 'Lmenu':
             self.LmenuPressed = True
         if str(event.Key) == 'X' and self.LcontrolPressed == True and self.LmenuPressed == True:
+            print('copy')
             im = ImageGrab.grabclipboard()
             if isinstance(im, Image.Image):
                 tmp_file = 'tmp.png'
@@ -27,9 +28,8 @@ class KeyboardMgr:
                 response_json = to_json(response.text)['data']
                 print(response_json)
                 url = response_json['url']
-                filename = response_json['filename']
-                pyperclip.copy('![' + filename + ']('+ url +')')
-                print('复制成功')
+                storename = response_json['storename']
+                pyperclip.copy('![' + storename + ']('+ url +')')
         return True
     def on_key_up(self, event):
         if str(event.Key) == 'Lcontrol':
